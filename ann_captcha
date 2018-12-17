@@ -1,0 +1,216 @@
+# _*_coding:utf-8_*_
+# Editor  : XI YUAN
+# Date    : 2018/12/16 19:49
+# File    : work.py
+# IDE     : PyCharm
+
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+from skimage import transform as tf
+from matplotlib import pyplot as plt
+from skimage.measure import label, regionprops
+from sklearn.utils import check_random_state
+from skimage.transform import resize
+from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import classification_report
+import nltk
+from nltk.corpus import words
+from sklearn.metrics import confusion_matrix
+from nltk.metrics import edit_distance
+from operator import itemgetter
+import warnings
+warnings.filterwarnings("ignore")
+
+def create_captcha(text, shear=0, size=(100, 24),scale=1):
+    im = Image.new("L", size, "black")
+    draw = ImageDraw.Draw(im)
+    font = ImageFont.truetype(r"C:\Users\Novsecond\Desktop\Coval-Black.ttf", 22)
+    draw.text((2, 2), text, fill=1, font=font)
+
+    image = np.array(im)
+
+    affine_tf = tf.AffineTransform(shear=shear)
+    image = tf.warp(image, affine_tf)
+
+    return image / image.max()
+
+image = create_captcha("GENE", shear=0.2)
+
+plt.imshow(image, cmap='Greys')
+plt.show()
+
+
+def segment_image(image):
+    labeled_image = label(image > 0)
+    subimages = []
+
+    for region in regionprops(labeled_image):
+        start_x, start_y, end_x, end_y = region.bbox
+
+        subimages.append(image[start_x:end_x, start_y:end_y])
+        if len(subimages) == 0:
+              return [image, ]
+        return subimages
+
+subimages = segment_image(image)
+
+random_state = check_random_state(14)
+letters = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+shear_values = np.arange(0, 0.5, 0.05)
+
+def generate_sample(random_state=None):
+    random_state = check_random_state(random_state)
+    letter = random_state.choice(letters)
+    shear = random_state.choice(shear_values)
+
+
+    return create_captcha(letter, shear=shear, size=(30, 30)),letters.index(letter)
+
+image, target = generate_sample(random_state)
+plt.imshow(image, cmap="Greys")
+plt.show()
+print("The target for this image is: {0}".format(letters[target]))
+
+
+dataset, targets = zip(*(generate_sample(random_state) for i in range(100)))
+dataset = np.array(dataset, dtype='float')
+targets = np.array(targets)
+
+onehot = OneHotEncoder()
+y = onehot.fit_transform(targets.reshape(targets.shape[0],1))
+
+y = y.todense()
+
+dataset = np.array([resize(segment_image(sample)[0], (20, 20)) for sample in dataset])
+
+
+X = dataset.reshape((dataset.shape[0], dataset.shape[1] * dataset.shape[2]))
+
+
+
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y, train_size=0.9)
+
+clf = MLPClassifier(hidden_layer_sizes=(100,), random_state=14)
+
+clf.fit(X_train, y_train)
+
+len(clf.coefs_)
+clf.coefs_[0].shape
+clf.coefs_[1].shape
+
+fig, axes = plt.subplots(4, 4)
+# use global min / max to ensure all weights are shown on the same scale
+vmin, vmax = clf.coefs_[0].min(), clf.coefs_[0].max()
+for coef, ax in zip(clf.coefs_[0].T, axes.ravel()):
+    ax.matshow(coef.reshape(20, 20), cmap=plt.cm.gray, vmin=.5 * vmin,
+               vmax=.5 * vmax)
+    ax.set_xticks(())
+    ax.set_yticks(())
+
+plt.show()
+
+y_pred = clf.predict(X_test)
+
+from sklearn.metrics import f1_score
+
+f1_score(y_pred=y_pred, y_true=y_test, average='macro')
+
+print(classification_report(y_pred=y_pred, y_true=y_test))
+
+def predict_captcha(captcha_image, neural_network):
+
+    
+    subimages = segment_image(captcha_image)
+
+
+    dataset = np.array([tf.resize(subimage, (20, 20)) for subimage in subimages])
+    X_test = dataset.reshape((dataset.shape[0], dataset.shape[1] * dataset.shape[2]))
+
+
+    y_pred = neural_network.predict_proba(X_test)
+    predictions = np.argmax(y_pred, axis=1)
+
+
+    assert len(y_pred) == len(X_test)
+
+
+    predicted_word = str.join("", [letters[prediction] for prediction in predictions])
+    return predicted_word
+
+word = "GENE"
+captcha = create_captcha(word, shear=0.2)
+print(predict_captcha(captcha, clf))
+
+
+def test_prediction(word, net, shear=0.2):
+    captcha = create_captcha(word, shear=shear)
+    prediction = predict_captcha(captcha, net)
+    prediction = prediction[:4]
+    return word == prediction, word, prediction
+
+
+nltk.download('words')
+valid_words = [word.upper() for word in words.words() if len(word) ==4]
+
+num_correct = 0
+num_incorrect = 0
+for word in valid_words:
+    correct, word, prediction = test_prediction(word, clf,shear=0.2)
+    if correct:
+        num_correct += 1
+    else:
+        num_incorrect += 1
+print("Number correct is {0}".format(num_correct))
+print("Number incorrect is {0}".format(num_incorrect))
+
+cm = confusion_matrix(np.argmax(y_test, axis=1), np.argmax(y_pred, axis=1))
+
+plt.figure(figsize=(10, 10))
+plt.imshow(cm)
+plt.show()
+
+tick_marks = np.arange(len(letters))
+plt.xticks(tick_marks, letters)
+plt.yticks(tick_marks, letters)
+plt.ylabel('Actual')
+plt.xlabel('Predicted')
+plt.show()
+
+steps = edit_distance("STEP", "STOP")
+print("The number of steps needed is: {0}".format(steps))
+
+def compute_distance(prediction, word):
+
+    len_word = min(len(prediction), len(word))
+
+    return len_word - sum([prediction[i] == word[i] for i in range(len_word)])
+
+
+def improved_prediction(word, net, dictionary, shear=0.2):
+    captcha = create_captcha(word, shear=shear)
+    prediction = predict_captcha(captcha, net)
+    prediction = prediction[:4]
+
+
+    if prediction not in dictionary:
+        distances = sorted([(word, compute_distance(prediction, word)) for word in dictionary],key=itemgetter(1))
+
+
+        best_word = distances[0]
+        prediction = best_word[0]
+
+
+    return word == prediction, word, prediction
+
+num_incorrect = 0
+for word in valid_words:
+    correct, word, prediction = improved_prediction(word, clf, valid_words, shear=0.2)
+    if correct:
+        num_correct += 1
+    else:
+        num_incorrect += 1
+print("Number correct is {0}".format(num_correct))
+print("Number incorrect is {0}".format(num_incorrect))
