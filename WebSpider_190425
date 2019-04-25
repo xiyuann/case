@@ -1,0 +1,1025 @@
+# _*_coding:utf-8_*_
+# Editor  : XI YUAN
+# Date    : 2019/4/25 15:57
+# File    : Practice.py
+# IDE     : PyCharm
+
+#这里先用截取的近千行源代码作为html，可以使用gethtml更为方便。
+
+import re
+
+html="""
+ <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30419377/?icn=index-latestbook-subject" title="重生三部曲">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32107474.jpg" class=""
+                  width="115px" height="172px" alt="重生三部曲">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30419377/?icn=index-latestbook-subject"
+                  title="重生三部曲">重生三部曲</a>
+              </div>
+              <div class="author">
+                [英]派特·巴克
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  重生三部曲
+                </h4>
+                <p>
+                  <span class="author">
+                    [英]派特·巴克
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4
+                  </span>
+                  /
+                  <span class="publisher">
+                    上海人民出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  ☆写给激荡时代的悲悯史诗
+☆二十世纪末英国小说中极少数真正的大师杰作
+☆荣获布克奖、卫报小说奖
+☆入选布克奖40周年最佳小说 | 十大历史小说（《观察家报》） | 《写作这回事》推荐书单
+----------------
+“很奇怪，对不对？尽管不支持战争，尽管对将领没信心，尽管堂而皇之的大话一堆，战场照样像是唯一干净的地方，令人向往。”
+“对。天啊，你说的对。”
+1917年8月，爱丁堡，...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/33403994/?icn=index-latestbook-subject" title="布罗茨基诗歌全集 第一卷（上）">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32297405.jpg" class=""
+                  width="115px" height="172px" alt="布罗茨基诗歌全集 第一卷（上）">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/33403994/?icn=index-latestbook-subject"
+                  title="布罗茨基诗歌全集 第一卷（上）">布罗茨基诗歌全集 第一卷（上）</a>
+              </div>
+              <div class="author">
+                [美] 约瑟夫·布罗茨基
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  布罗茨基诗歌全集 第一卷（上）
+                </h4>
+                <p>
+                  <span class="author">
+                    [美] 约瑟夫·布罗茨基
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4-30
+                  </span>
+                  /
+                  <span class="publisher">
+                    上海译文出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  1987年诺贝尔文学奖得主布罗茨基诗歌全集
+世界范围内继英语和俄语后的第三个语种版本
+-
+◎ 编辑推荐
+作者布罗茨基是1987年诺贝尔文学奖的主，已经被公认为是世界范围20世纪最伟大的诗人之一，国内无论普通读者还是学术界都对他非常关注。本次出版将华语世界第一次也是最大规模地全面翻译出版布罗茨基的诗作全集，也是世界范围内除了英语和俄语外的第三个语种的译本。
+采...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30376524/?icn=index-latestbook-subject" title="救赎游戏">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s30024215.jpg" class=""
+                  width="115px" height="172px" alt="救赎游戏">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30376524/?icn=index-latestbook-subject"
+                  title="救赎游戏">救赎游戏</a>
+              </div>
+              <div class="author">
+                张弛
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  救赎游戏
+                </h4>
+                <p>
+                  <span class="author">
+                    张弛
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4
+                  </span>
+                  /
+                  <span class="publisher">
+                    上海社会科学院出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  T市著名的慈善家、企业家罗伟离奇死在发迹地景家镇一栋还未竣工的商场车库内，同时死在车库的还有一名叫做粟林的高中生。
+负责该案件的T市公安局刑侦大队成员炎宏跟随大队长安起民赶到现场进行侦查，在那儿结识了T市报社记者斗魏，并因共同的刑侦推理爱好，两人成为朋友。
+两名死者间的关系，死者妻子与司机的不明关系，重大嫌疑人列杰的不在场证明……谜团一个接一个...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30428815/?icn=index-latestbook-subject" title="起源">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32278451.jpg" class=""
+                  width="115px" height="172px" alt="起源">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30428815/?icn=index-latestbook-subject"
+                  title="起源">起源</a>
+              </div>
+              <div class="author">
+                [美] 大卫·克里斯蒂安
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  起源
+                </h4>
+                <p>
+                  <span class="author">
+                    [美] 大卫·克里斯蒂安
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4-10
+                  </span>
+                  /
+                  <span class="publisher">
+                    中信出版社·见识城邦
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  人类的终极追问中，起源总是一个避不开的问题。
+世界上有100多种起源故事，几乎所有的人类文化和宗教传统都有自己的起源故事：《圣经·创世记》上说万事万物是上帝创造的，中国的传世神话说盘古开天辟地、女娲造人，古希腊神话中原始宇宙起始于大地女神盖亚等最早的神灵，印度神话里说众生之父梵天创造了宇宙万物，古埃及的起源故事开始于原始海洋神努恩，等等。
+这些...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30466169/?icn=index-latestbook-subject" title="记号">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32299224.jpg" class=""
+                  width="115px" height="172px" alt="记号">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30466169/?icn=index-latestbook-subject"
+                  title="记号">记号</a>
+              </div>
+              <div class="author">
+                [马其顿]布拉热·米内夫斯基
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  记号
+                </h4>
+                <p>
+                  <span class="author">
+                    [马其顿]布拉热·米内夫斯基
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3-1
+                  </span>
+                  /
+                  <span class="publisher">
+                    上海文艺出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  “我，狙击手；你，敌方女狙击手，我称你为朵兰缇娜。我看见你的手指扣紧了扳机，就像现在我也扣紧了扳机；我清楚你定能射中我，就像我也能轻易击中你。
+“你可以看见我双眉间的记号，我说，记号，我对你说，这疤痕就是那时候留下的，当时全世界只剩下我一人，因此我想要印上记号，好得到惩罚，追上天堂中我所爱的人。”
+两人在战场上针锋相对，如同一场棋局，心理战愈...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30312119/?icn=index-latestbook-subject" title="美之地图">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s29987342.jpg" class=""
+                  width="115px" height="172px" alt="美之地图">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30312119/?icn=index-latestbook-subject"
+                  title="美之地图">美之地图</a>
+              </div>
+              <div class="author">
+                [罗马尼亚]米哈埃拉•诺洛茨
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  美之地图
+                </h4>
+                <p>
+                  <span class="author">
+                    [罗马尼亚]米哈埃拉•诺洛茨
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3
+                  </span>
+                  /
+                  <span class="publisher">
+                    广西师范大学出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  浮士德说：“你真美啊，请停一停。”在 《美之地图》里，时间停了下来。
+《美之地图》是罗马尼亚摄影师米哈埃拉•诺洛茨发起的一个摄影项目，诺洛茨于2013—2017年自费前往50多个国家旅行，并为当地女性拍摄肖像，记录这个世界上女性多元的生活状态和丰富多样的美。这些摄影作品发布在Facebook和Instagram上，得到全世界的关注。目前这个项目仍在进行中。
+《美之地...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/33377958/?icn=index-latestbook-subject" title="大卫">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32295554.jpg" class=""
+                  width="115px" height="172px" alt="大卫">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/33377958/?icn=index-latestbook-subject"
+                  title="大卫">大卫</a>
+              </div>
+              <div class="author">
+                YiLi
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  大卫
+                </h4>
+                <p>
+                  <span class="author">
+                    YiLi
+                  </span>
+                  /
+                  <span class="year">
+                    2019-5
+                  </span>
+                  /
+                  <span class="publisher">
+                    后浪丨四川文艺出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  生而为鸟，我很抱歉
+鸟头、人身，超现实主义角色设定
+另类描述人性中的柔软与脆弱
+◎ 编辑推荐
+★ 半人半鸟——与大环境格格不入时的自我形象
+“半人半鸟”的设定可以代指一切人与人之间的差异——肤色、地域、年龄、性别、性格、爱好……作者用这样一种极端且超现实的形象设定，描绘出人们生活中的疏离感所带来的迷茫与忧伤。
+★ 带着一丝暖意且轻柔的铅笔手绘线条，不一样...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30483768/?icn=index-latestbook-subject" title="秋水堂论金瓶梅">
+                <img src="https://img1.doubanio.com/view/subject/m/public/s32292409.jpg" class=""
+                  width="115px" height="172px" alt="秋水堂论金瓶梅">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30483768/?icn=index-latestbook-subject"
+                  title="秋水堂论金瓶梅">秋水堂论金瓶梅</a>
+              </div>
+              <div class="author">
+                田晓菲
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  秋水堂论金瓶梅
+                </h4>
+                <p>
+                  <span class="author">
+                    田晓菲
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3
+                  </span>
+                  /
+                  <span class="publisher">
+                    广西师范大学出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  1．高晓松作序推荐，体验“电影拉片”式阅读——高晓松序言说，本书读解《金瓶梅》之详尽，几乎与学电影时一个个镜头“拉片”相似，凡举结构、背景、隐喻、人物、故事、审美、哲学、食物、器具、服饰、音乐、绘画、诗歌、方言……高晓松用五期《晓说》讲述《金瓶梅》，其中不少想法受秋水堂 启发，若对照节目与本书，当能体会其中默契。
+2．左手“秋水堂”，右手《金...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/26902565/?icn=index-latestbook-subject" title="卡洛琳字体">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32268122.jpg" class=""
+                  width="115px" height="172px" alt="卡洛琳字体">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/26902565/?icn=index-latestbook-subject"
+                  title="卡洛琳字体">卡洛琳字体</a>
+              </div>
+              <div class="author">
+                [英] 安德鲁·泰勒
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  卡洛琳字体
+                </h4>
+                <p>
+                  <span class="author">
+                    [英] 安德鲁·泰勒
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4
+                  </span>
+                  /
+                  <span class="publisher">
+                    新星出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  一日清早，剑桥历史系研究生威廉·杜戈尔被导师叫去办公室，不料等待他的却是导师的尸体！
+当日杜戈尔又收到一份用中世纪字体写成的文件，且有人暗示他这里藏有大笔财富和导致他的导师死亡的原因。杜戈尔利用专业知识成功翻译了文件，没想到又在报纸上看到了熟悉的人的讣告……
+安德鲁·泰勒是一位久经世故的作家，同时知道如何巧妙地安排文字。——《纽约时报书评》
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30384144/?icn=index-latestbook-subject" title="乌鸦">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32284856.jpg" class=""
+                  width="115px" height="172px" alt="乌鸦">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30384144/?icn=index-latestbook-subject"
+                  title="乌鸦">乌鸦</a>
+              </div>
+              <div class="author">
+                (美) 博里亚·萨克斯
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  乌鸦
+                </h4>
+                <p>
+                  <span class="author">
+                    (美) 博里亚·萨克斯
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4
+                  </span>
+                  /
+                  <span class="publisher">
+                    南京大学出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  【编辑推荐】
+★《权力的游戏》里的三眼乌鸦背后有什么故事？《名侦探柯南》终极大boss乌丸莲耶家族徽章上的乌鸦有什么秘密？让这本《乌鸦》给你揭秘。
+★乌鸦，扑朔迷离的黑色精灵，其角色千变万化：阿波罗的圣物、女巫的魔宠、死亡的信使、吉祥婚姻的象征、爱伦·坡的古鸟、梵高的墨点……
+★它从古埃及穿越中世纪的欧洲，飞到我们居住的城市，从希腊罗马神话穿越文...
+                </p>
+              </div>
+            </div>
+          </li>
+    </ul>
+    <ul class="list-col list-col5 list-express slide-item">
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30388865/?icn=index-latestbook-subject" title="煎饼坪">
+                <img src="https://img1.doubanio.com/view/subject/m/public/s30015189.jpg" class=""
+                  width="115px" height="172px" alt="煎饼坪">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30388865/?icn=index-latestbook-subject"
+                  title="煎饼坪">煎饼坪</a>
+              </div>
+              <div class="author">
+                [美] 约翰·斯坦贝克
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  煎饼坪
+                </h4>
+                <p>
+                  <span class="author">
+                    [美] 约翰·斯坦贝克
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3
+                  </span>
+                  /
+                  <span class="publisher">
+                    人民文学出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  《煎饼坪》是斯坦贝克的早期作品，出版于1935年，描写了一群流浪汉在第一次世界大战后享受生活的故事。这是斯坦贝克第一部大获成功的作品，自此他开始为评论界所关注。也是从这部作品起，斯坦贝克坚定地用细腻的笔调忠实反映生活、刻画人物，描写社会中下层人民的生活。
+《煎饼坪》突出流浪汉们无忧无虑的心情，赞扬他们在极端贫苦中所表现出来的单纯和质朴，他们不...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30389426/?icn=index-latestbook-subject" title="常识">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s29934234.jpg" class=""
+                  width="115px" height="172px" alt="常识">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30389426/?icn=index-latestbook-subject"
+                  title="常识">常识</a>
+              </div>
+              <div class="author">
+                [英] 理查德·普拉特&nbsp;/&nbsp;詹姆斯·布朗
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  常识
+                </h4>
+                <p>
+                  <span class="author">
+                    [英] 理查德·普拉特&nbsp;/&nbsp;詹姆斯·布朗
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3
+                  </span>
+                  /
+                  <span class="publisher">
+                    后浪丨北京联合出版公司
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  理查德·普拉特（ DK 金牌作者＋蓝彼得图书奖获奖者）全新科普力作，图文设计简洁明了，通过 30 个日常主题，讲述背后科学原理与历史趣闻。打破学科壁垒，让生活中的常识变得丰满立体。
+◎ 编辑推荐
+◇ DK金牌作者理查德·普拉特全新力作
+理查德·普拉特出版过 70 余部儿童科普书, 先后获得蓝彼得图书奖，斯马蒂斯银奖，凯特·格林纳威奖，被誉为英国最成功的科普作家之一...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/27172218/?icn=index-latestbook-subject" title="全面回忆">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32301130.jpg" class=""
+                  width="115px" height="172px" alt="全面回忆">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/27172218/?icn=index-latestbook-subject"
+                  title="全面回忆">全面回忆</a>
+              </div>
+              <div class="author">
+                [美]菲利普·迪克
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  全面回忆
+                </h4>
+                <p>
+                  <span class="author">
+                    [美]菲利普·迪克
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3-1
+                  </span>
+                  /
+                  <span class="publisher">
+                    四川科学技术出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  20世纪50年代初期，菲利普·迪克通过大量中短篇作品进入科幻界，轰动一时。特别是在1953年至1954年短短两年间，共发表了五十六篇中短篇小说，可谓风头一时无二。其后，迪克始终保持着旺盛的创作精力，成为多产的科幻作家之一。他的作品以对人类本质的思考、对未来诡异离奇的幻想以及才华横溢的流畅叙事蜚声国际。
+本套中短篇小说集共五册，收录了菲利普·迪克所有的...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/33395164/?icn=index-latestbook-subject" title="北京：公共空间和城市生活">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32297406.jpg" class=""
+                  width="115px" height="172px" alt="北京：公共空间和城市生活">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/33395164/?icn=index-latestbook-subject"
+                  title="北京：公共空间和城市生活">北京：公共空间和城市生活</a>
+              </div>
+              <div class="author">
+                [美] 韩书瑞（Susan Naquin）
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  北京：公共空间和城市生活
+                </h4>
+                <p>
+                  <span class="author">
+                    [美] 韩书瑞（Susan Naquin）
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3-28
+                  </span>
+                  /
+                  <span class="publisher">
+                    中国人民大学出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  本书作者韩书瑞教授从七十年代开始致力于清代民间宗教的研究，先后出版了乾隆朝王伦清水教和嘉庆朝京畿八卦教起义两部著作。此后她将注意力转到清代北京民间宗教活动上，2000年推出这部篇幅宏大、内容详尽的以清代北京宗教寺庙和民间日常宗教活动为主题的著作。在作者眼中，民间宗教活动是清代平民日常生活的重要组成部分，是研究平民生活和国家/社会关系的理想场所...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30468752/?icn=index-latestbook-subject" title="文学少女对数学少女">
+                <img src="https://img1.doubanio.com/view/subject/m/public/s32278688.jpg" class=""
+                  width="115px" height="172px" alt="文学少女对数学少女">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30468752/?icn=index-latestbook-subject"
+                  title="文学少女对数学少女">文学少女对数学少女</a>
+              </div>
+              <div class="author">
+                陆秋槎
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  文学少女对数学少女
+                </h4>
+                <p>
+                  <span class="author">
+                    陆秋槎
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4
+                  </span>
+                  /
+                  <span class="publisher">
+                    新星出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  “推理小说虽然是用自然语言写成的，却和形式系统具有相同的性质。”
+文学少女陆秋槎，为探究推理小说的严密性，误闯数学少女韩采芦的寝室，由此展开了一系列思维及身体的大冒险。推理小说的真相，能否像数学定理那样得到无懈可击的证明？困扰数学界三百五十八年的费马大定理，其证明史能否改写成一篇猜凶手谜题？看似条件不足无从推理的案件，又是否能另辟蹊径、直抵...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30296201/?icn=index-latestbook-subject" title="鸟类的天赋">
+                <img src="https://img1.doubanio.com/view/subject/m/public/s30019129.jpg" class=""
+                  width="115px" height="172px" alt="鸟类的天赋">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30296201/?icn=index-latestbook-subject"
+                  title="鸟类的天赋">鸟类的天赋</a>
+              </div>
+              <div class="author">
+                [美]珍妮弗·阿克曼
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  鸟类的天赋
+                </h4>
+                <p>
+                  <span class="author">
+                    [美]珍妮弗·阿克曼
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4-30
+                  </span>
+                  /
+                  <span class="publisher">
+                    译林出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  ▼我们经常忘记钥匙在哪里，乌鸦却能记住5000个贮藏食物的地点。
+人类与鸟类在演化之路上走向不同的分支，我们习惯于以自身的尺度衡量智力，从而严重低估了其他物种的潜能。《鸟类的天赋》用一段寻找最强鸟脑的旅程，颠覆了人类对鸟的认知。本书从工具制造、沟通、鸣唱、审美、空间感和时 间感、环境适应能力等方面展示了鸟类的智力奇迹，让我们重新认识了身边这些熟...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30469015/?icn=index-latestbook-subject" title="你消失的那一夜">
+                <img src="https://img1.doubanio.com/view/subject/m/public/s32286808.jpg" class=""
+                  width="115px" height="172px" alt="你消失的那一夜">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30469015/?icn=index-latestbook-subject"
+                  title="你消失的那一夜">你消失的那一夜</a>
+              </div>
+              <div class="author">
+                [日]中村文则
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  你消失的那一夜
+                </h4>
+                <p>
+                  <span class="author">
+                    [日]中村文则
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4-1
+                  </span>
+                  /
+                  <span class="publisher">
+                    中国工人出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  *大卫·古迪斯奖、杜马戈文学奖等获奖作家中村文则长篇力作
+*多国翻译出版/受世界各国读者赞赏
+*警察与凶手的斗智
+*神秘消失的一夜/行踪诡异的“大衣男”/错综复杂的连环案
+*轻型纸印刷，品相好，物美价廉
+内容简介
+小镇发生连环“路魔”杀人案，无业男子、家庭主妇、俱乐部老板相继在深夜的路上，遭遇一名穿灰色大衣的持刀男子袭击。自杀的精神科医生死前留下遗书，承认自己...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30421672/?icn=index-latestbook-subject" title="现实的社会建构">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32301213.jpg" class=""
+                  width="115px" height="172px" alt="现实的社会建构">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30421672/?icn=index-latestbook-subject"
+                  title="现实的社会建构">现实的社会建构</a>
+              </div>
+              <div class="author">
+                [美] 彼得·伯格&nbsp;/&nbsp;[美] 托马斯·卢克曼
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  现实的社会建构
+                </h4>
+                <p>
+                  <span class="author">
+                    [美] 彼得·伯格&nbsp;/&nbsp;[美] 托马斯·卢克曼
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3
+                  </span>
+                  /
+                  <span class="publisher">
+                    北京大学出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  《现实的社会建构》是知识社会学的经典之作，也是社会建构论的扛鼎之作，更是社会学领域影响较大的著作之一。该书不仅将知识社会学的考察范围，从少数人关心的科学和理论知识，拓展到一般人在日常生活中用以指导行动的知识，而且以生动的笔法，揭示了作为“客观现实”和“主观现实”的社会，到底是如何构成的，又具有怎样的特性。
+本书融汇了现象学的洞察与人文主义的...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30449796/?icn=index-latestbook-subject" title="林荫幽径">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32295572.jpg" class=""
+                  width="115px" height="172px" alt="林荫幽径">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30449796/?icn=index-latestbook-subject"
+                  title="林荫幽径">林荫幽径</a>
+              </div>
+              <div class="author">
+                [俄]伊凡·蒲宁
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  林荫幽径
+                </h4>
+                <p>
+                  <span class="author">
+                    [俄]伊凡·蒲宁
+                  </span>
+                  /
+                  <span class="year">
+                    2019-5
+                  </span>
+                  /
+                  <span class="publisher">
+                    漓江出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  《林荫幽径》是诺贝尔文学奖获得者蒲宁暮年的最后一部自选集，用八年时间写成，是他一生中写得最好、最富独创性的一个集子。《林荫幽径》真切地表现了作者对于故国的怀念和对于逝去的青年时代的眷恋。作品构思玲珑剔透，非常精致，有着磁石般的强烈吸引力；文字精练，抒情性强，擅 长表现人物内心的微妙情感。具有悠远的意境和发人遐思的哲理，展现了永恒的艺术魅力...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30400716/?icn=index-latestbook-subject" title="异端">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s30013802.jpg" class=""
+                  width="115px" height="172px" alt="异端">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30400716/?icn=index-latestbook-subject"
+                  title="异端">异端</a>
+              </div>
+              <div class="author">
+                [美]史蒂文·纳德勒[美]本·纳德勒
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  异端
+                </h4>
+                <p>
+                  <span class="author">
+                    [美]史蒂文·纳德勒[美]本·纳德勒
+                  </span>
+                  /
+                  <span class="year">
+                    2019-3-1
+                  </span>
+                  /
+                  <span class="publisher">
+                    南海出版公司
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  如果所有人都站到了你的另一端，如何证明你是对的？
+这有一本有趣又深刻的哲学漫画，送给偶尔也想特立独行的你。
+以1600年布鲁诺被烧死在罗马鲜花广场为开端，本书带我们游历了1646年的巴黎，1650年的剑桥，1670年的海牙，1686年的汉诺威……穿越回哲学诞生现场 ，哲学家一点没有课本中的架子，而是念着幽默的台词，奔波于一个又一个极富创意的分镜。跟随他们，我们...
+                </p>
+              </div>
+            </div>
+          </li>
+    </ul>
+    <ul class="list-col list-col5 list-express slide-item">
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30446954/?icn=index-latestbook-subject" title="葛洛根的最后一夜">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32284912.jpg" class=""
+                  width="115px" height="172px" alt="葛洛根的最后一夜">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30446954/?icn=index-latestbook-subject"
+                  title="葛洛根的最后一夜">葛洛根的最后一夜</a>
+              </div>
+              <div class="author">
+                [美]劳伦斯·布洛克
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  葛洛根的最后一夜
+                </h4>
+                <p>
+                  <span class="author">
+                    [美]劳伦斯·布洛克
+                  </span>
+                  /
+                  <span class="year">
+                    2019-5
+                  </span>
+                  /
+                  <span class="publisher">
+                    四川人民出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  爱伦坡终身大师奖得主、硬汉派侦探小说代表作家劳伦斯•布洛克
+侯孝贤、王家卫、梁朝伟、张大春、朱天文、朱天心为之迷狂
+马修·斯卡德短篇故事结集
+与葛洛根酒吧告别，但今晚属于纽约
+◎ 编辑推荐
+▲ 劳伦斯•布洛克，“纽约犯罪风景的吟游诗人”，享誉世界的美国侦探小说大师，欧美 硬汉派侦探小说的杰出代表，多次获得安东尼奖、爱伦•坡奖、夏姆斯奖等推理小说界重要奖...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">
+            <div class="cover">
+              <a href="https://book.douban.com/subject/32567709/?icn=index-latestbook-subject" title="五四的另一面">
+                <img src="https://img1.doubanio.com/view/subject/m/public/s32279899.jpg" class=""
+                  width="115px" height="172px" alt="五四的另一面">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/32567709/?icn=index-latestbook-subject"
+                  title="五四的另一面">五四的另一面</a>
+              </div>
+              <div class="author">
+                杨念群
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  五四的另一面
+                </h4>
+                <p>
+                  <span class="author">
+                    杨念群
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4
+                  </span>
+                  /
+                  <span class="publisher">
+                    上海人民出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  ☆  著名历史学家杨念群教授，《何处是“江南”？》之后，另辟新径之作——
+跨政治史、社会史、思想史、文化史等多元领域，融入对五四重要议题的全新思考，展现最为新锐的史学前沿研究。
+☆五四一百周年纪念热潮中的理智冷静之作——
+有意淡化纪念五四的仪式感，反对老调重弹、拘泥旧话题的“纪念史学”套路。
+☆重新定位五四，发现斑 驳多彩、异常复杂的历史真相——
+把五...
+                </p>
+              </div>
+            </div>
+          </li>
+          
+  
+          <li class="">  
+            <div class="cover">
+              <a href="https://book.douban.com/subject/30441529/?icn=index-latestbook-subject" title="香河">
+                <img src="https://img3.doubanio.com/view/subject/m/public/s32299222.jpg" class=""
+                  width="115px" height="172px" alt="香河">
+              </a>
+            </div>
+            <div class="info">
+              <div class="title">
+                <a class="" href="https://book.douban.com/subject/30441529/?icn=index-latestbook-subject"
+                  title="香河">香河</a>
+              </div>
+              <div class="author">
+                [美]罗伯特·奥伦·巴特勒
+              </div>
+              <div class="more-meta">
+                <h4 class="title">
+                  香河
+                </h4>
+                <p>
+                  <span class="author">
+                    [美]罗伯特·奥伦·巴特勒
+                  </span>
+                  /
+                  <span class="year">
+                    2019-4-7
+                  </span>
+                  /
+                  <span class="publisher">
+                    广西师范大学出版社
+                  </span>
+                </p>
+                <p class="abstract">
+                  
+                  七十岁的美国历史学家罗伯特•昆兰是一名越战老兵，与妻子同在佛罗里达州立大学任教。四十多年前，美国反越战浪潮催生了两人的爱情，但漫长的时间与琐碎的生活终究冲淡了激情，他们被困在了诸如早晨的现磨咖啡和孤独慢跑之中。
+一次外出就餐，罗伯特偶遇一名流浪疯汉，这个看起来也像是越战老兵的男人勾起了罗伯特心中尘封的往事。越南的香河、穿着奥黛的姑娘、藏身榕...
+                </p>
+              </div>
+            </div>
+          </li>"""
+
+# pattern = '<li.*?cover.*?alt=""(.*?)".*?<div\sclass="author">"(.*?)".*?<span\sclass="year">"(.*?)".*?<span\sclass="publisher">"(.*?)".*?</li>'
+pattern = r"""<div class="more-meta">
+                <h4 class="title">
+                  (.*?)
+                </h4>"""
+res = re.compile(pattern)
+results = res.findall(html,re.S)
+
+print(results)
