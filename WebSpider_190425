@@ -1014,7 +1014,6 @@ html="""
             </div>
           </li>"""
 
-# pattern = '<li.*?cover.*?alt=""(.*?)".*?<div\sclass="author">"(.*?)".*?<span\sclass="year">"(.*?)".*?<span\sclass="publisher">"(.*?)".*?</li>'
 pattern = r"""<div class="more-meta">
                 <h4 class="title">
                   (.*?)
