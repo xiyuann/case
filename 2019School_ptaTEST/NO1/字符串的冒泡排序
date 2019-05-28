@@ -1,0 +1,71 @@
+字符串的冒泡排序
+
+我们已经知道了将N个整数按从小到大排序的冒泡排序法。本题要求将此方法用于字符串序列，并对任意给定的K（<N），输出扫描完第K遍后的中间结果序列。
+
+INPUT:
+6 2
+best
+cat
+east
+a
+free
+day
+
+OUTPUT:
+best
+a
+cat
+day
+east
+free
+
+
+# include <stdio.h>
+# include <string.h>   //需要用到字符串中字典序等操作函数
+
+int main(){            //主函数
+	
+     char a[100][10], temp[11];  //定义字符串数组a，后面冒泡需要的交换数组temp
+                //题目中限定1≤K<N≤100，此后N行，每字母长度不超过10
+     
+     int K,N,i,j;  //定义整型变量
+     
+     scanf("%d %d", &N, &K);  //输入N行，K次遍历次数
+     
+     
+     
+     for (i = 0; i <= N; i++){   //循环输出字符串
+	 
+          scanf("%s",a[i]);    //gets()字符串函数的输入，并将其存放在二维数组的一维中
+      }
+      
+     for (i = 1; i <= K; i++){  //冒泡排序算法
+	 
+         for(j = 0;j <= N - i;j++) {
+           
+          /* 因为字符串交换不能用通常的方法，需要strcpy()函数进行操作，
+             即strcpy(A,B)，将B复制到A，而strcmp()函数用来字符串间的大小比较
+             
+             将a[j]与a[j+1]即比较首字母排序
+             如果在字典序，a[j]>a[j+1]则进行：
+                 将a[i]复制到temp数组中，
+                 再将a[j+1]复制到a[j],
+                 最后将temp复制到a[j+1]。
+                 
+                 以上操作即为交换，
+                 如：temp = a；
+                     a = b；
+                     b = temp；                           */
+            if (strcmp(a[j], a[j + 1]) > 0){
+               strcpy(temp, a[j]);
+               strcpy(a[j], a[j + 1]);
+               strcpy(a[j + 1], temp);
+        }
+    }
+}
+     for (i = 0; i <= N; i++){           //循环遍历N次运用字符串输出方式puts
+	 
+         printf("%s",a[i]);
+     }
+     return 0;
+}
