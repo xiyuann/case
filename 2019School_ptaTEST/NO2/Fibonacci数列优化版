@@ -1,0 +1,58 @@
+求Finonacci数列的第n项，n<=60，其中第1项为1，第2项为1。
+
+输入在第一行给出一个正整数N（≤100），是待求取的数的个数。随后N行，输入n个数字num。
+对每一组输入num，在一行中输出Finonacci数列的第num项的值。
+
+INPUT:
+3
+3
+5
+6
+
+OUTPUT:
+2
+5
+8
+
+#include<iostream>
+using namespace std;
+
+int Fib(int num){
+	if(num <= 0){
+    return 1;
+	}
+  if(num==1|| num==2){
+    return 1;
+  }
+ 
+    int first = 1;
+    int second = 1;
+    int result = 0;
+    for(int i = 3; i <= num; i ++){
+            result = first + second;
+            first = second;
+            second = result;
+    }
+        return result;
+
+}
+
+int main(){
+	
+	int N,num,i;
+	int j=1;
+	int a[60];
+	
+	cin >> N;
+	
+	for(i=1;i<=N;i++){
+		cin >> num;
+		a[j] = Fib(num);
+		j++;		  	
+	}
+	for(j=1;j<=N;j++){
+		
+		cout << a[j] <<endl;
+	}
+    return 0;
+}
